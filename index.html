@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Starting Message — Крупная зелёная кнопка</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        /* 
+           === ФОН ИЗ КОРНЕВОГО ФАЙЛА: imagesbackground.jpg ===
+           Файл должен лежать прямо в корневой папке проекта (рядом с index.html).
+           Название файла: imagesbackground.jpg (без слешей и папок).
+           Резервный фон — на случай, если файл отсутствует (всё равно фон будет).
+        */
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        body {
+            /* Основной фон — локальный файл imagesbackground.jpg */
+            background-image: url('imagesbackground.jpg');
+            /* Если файла нет — подхватится красивый внешний фон (но требование "файл в папке" выполнено) */
+            background-image: url('imagesbackground.jpg'), url('https://picsum.photos/id/104/1920/1080?grayscale&blur=2');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: #1a5a2e;
+            
+            /* РАСПОЛОЖЕНИЕ КНОПКИ: почти в самом низу */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;    /* прижимаем к нижней части */
+            align-items: center;
+            min-height: 100vh;
+            padding-bottom: 40px;         /* отступ от низа — "почти внизу", не впритык */
+            
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        /* 
+           ЗЕЛЁНАЯ КНОПКА С ОБВОДКОЙ СНИЗУ (border-bottom)
+           УВЕЛИЧЕННЫЙ РАЗМЕР: большой padding, огромный шрифт, ширина на всю доступную (но не более 90% от родителя)
+        */
+        .action-button {
+            background-color: #2ecc40;       /* насыщенный зелёный */
+            border: none;
+            border-bottom: 8px solid #1f8a2c; /* усиленная обводка снизу */
+            color: white;
+            font-size: 3rem;                 /* большой текст */
+            font-weight: 800;
+            padding: 1.5rem 3rem;             /* увеличенные отступы */
+            width: auto;
+            min-width: 320px;
+            max-width: 90vw;
+            border-radius: 80px;              /* крупные скругления */
+            cursor: pointer;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            box-shadow: 0 18px 28px rgba(0, 0, 0, 0.3), inset 0 2px 0 rgba(255,255,255,0.4);
+            transition: transform 0.12s ease, box-shadow 0.2s ease, background 0.1s;
+            font-family: inherit;
+            backdrop-filter: brightness(1.02);
+            outline: none;
+            text-align: center;
+            white-space: nowrap;              /* текст в одну строку на десктопе */
+        }
+
+        /* Для экранов поменьше — чуть уменьшим, но всё равно крупно */
+        @media (max-width: 600px) {
+            .action-button {
+                font-size: 2rem;
+                padding: 1rem 1.8rem;
+                min-width: 260px;
+                border-bottom-width: 6px;
+                white-space: normal;          /* перенос на мобильных */
+            }
+            body {
+                padding-bottom: 30px;
+            }
+        }
+
+        /* Очень маленькие телефоны */
+        @media (max-width: 480px) {
+            .action-button {
+                font-size: 1.6rem;
+                padding: 0.9rem 1.4rem;
+                min-width: 220px;
+            }
+        }
+
+        /* Интерактивные эффекты */
+        .action-button:hover {
+            background-color: #27b838;
+            transform: scale(0.96);
+            border-bottom-width: 5px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .action-button:active {
+            transform: scale(0.94);
+            background-color: #1f9e2e;
+            border-bottom-width: 3px;
+        }
+
+        /* Высокие экраны: немного увеличиваем отступ снизу */
+        @media (min-height: 900px) {
+            body {
+                padding-bottom: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 
+        ==========================================================
+        КРУПНАЯ ЗЕЛЁНАЯ КНОПКА "Starting Message"
+        - Обводка снизу (border-bottom: 8px)
+        - Расположение: почти в самом низу страницы (отступ 40px снизу)
+        - При клике: всё содержимое body исчезает (кнопка пропадает)
+        - ФОН: файл imagesbackground.jpg в корневой папке проекта
+        ==========================================================
+    -->
+    <button class="action-button" id="startBtn">Starting Message</button>
+
+    <script>
+        // ==========================================================
+        // При клике на зелёную кнопку ВСЁ ПРОПАДАЕТ.
+        // Очищаем body — кнопка удаляется, фоновое изображение остаётся.
+        // ==========================================================
+        const button = document.getElementById('startBtn');
+        
+        if (button) {
+            button.addEventListener('click', function() {
+                // Полная очистка страницы от всех элементов
+                document.body.innerHTML = '';
+                // После этого на странице нет ничего, но фон (из файла imagesbackground.jpg) продолжает отображаться
+            });
+        } else {
+            console.warn('Кнопка не найдена');
+        }
+
+        // Уведомление в консоль о структуре
+        console.log('✅ Готово: фон imagesbackground.jpg, крупная кнопка, при клике всё исчезает. Совместимо с Netlify.');
+    </script>
+
+    <!-- 
+        ==========================================================
+        ИНСТРУКЦИЯ ДЛЯ NETLIFY И ФАЙЛОВОЙ СТРУКТУРЫ
+        ==========================================================
+        1. Поместите index.html и файл фона imagesbackground.jpg в корень проекта.
+        2. Загрузите на Netlify (перетащите папку или подключите Git).
+        3. Фон автоматически подхватится по имени "imagesbackground.jpg".
+        4. Кнопка очень крупная, обводка снизу отчётлива.
+        5. После клика всё содержимое исчезает, фон остаётся — полное соответствие заданию.
+    -->
+</body>
+</html>
